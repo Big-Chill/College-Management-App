@@ -129,7 +129,7 @@ cython_debug/
 
 # Docker
 **/courses.db
-**/users.db
+UserService/dbdata/users.db
 
 # Misc
 .DS_Store

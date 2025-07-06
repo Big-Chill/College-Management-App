@@ -9,6 +9,8 @@ services:
       - "8000:8000"                # Expose UserService on localhost:8000
     env_file:
       - ./UserService/.env
+    volumes:
+      - ./UserService/dbdata:/app/dbdata
     restart: unless-stopped
 
   course-service:
