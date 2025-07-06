@@ -1,7 +1,8 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
-from app.models.v1.user import User
 from sqlalchemy import or_
+from app.models.v1.user import User
+from app.models.v1.role import Role
 from app.schemas.v1.user import UserCreate
 from app.core.security import hash_password, verify_password
 
@@ -14,13 +15,17 @@ class UserService:
         ).first()
         if existing:
             raise ValueError("Username or email already registered")
+        # Check if role_id exists
+        role = db.query(Role).filter(Role.id == user_in.role_id).first()
+        if not role:
+            raise ValueError("Role does not exist")
         hashed_pw = hash_password(user_in.password)
         db_user = User(
             username=user_in.username,
             full_name=user_in.full_name,
             email=user_in.email,
             hashed_password=hashed_pw,
-            role=user_in.role
+            role_id=user_in.role_id  # Use role_id, not role string
         )
         db.add(db_user)
         try:
@@ -33,8 +38,6 @@ class UserService:
 
     @staticmethod
     def authenticate_user(db: Session, username: str, password: str):
-        # Allow login with username or email
-        from sqlalchemy import or_
         user = db.query(User).filter(
             or_(User.username == username, User.email == username)
         ).first()

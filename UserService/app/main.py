@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from app.core.database import Base, engine
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
-from app.api.v1 import user, auth
+from app.api.v1 import user, auth, role
 
 Base.metadata.create_all(bind=engine)
 
@@ -24,6 +24,7 @@ app.add_middleware(
 # Include versioned routers
 app.include_router(user.router, prefix=f"{settings.API_V1_STR}/users", tags=["users"])
 app.include_router(auth.router, prefix=f"{settings.API_V1_STR}/auth", tags=["auth"])
+app.include_router(role.router, prefix=f"{settings.API_V1_STR}/roles", tags=["roles"])
 
 # Health check endpoint
 @app.get("/", tags=["health"])

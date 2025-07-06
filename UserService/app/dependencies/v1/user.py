@@ -32,7 +32,8 @@ async def get_current_user(
 
 def require_role(roles: list[str]):
     def role_checker(user: User = Depends(get_current_user)) -> User:
-        if user.role not in roles:
+        # Ensure user.role is loaded (relationship)
+        if not user.role or user.role.name not in roles:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail="Not enough permissions"
