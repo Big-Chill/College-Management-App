@@ -1,0 +1,34 @@
+user_service/
+├── app/
+│   ├── __init__.py
+│   ├── main.py                    # FastAPI app entry point
+│   ├── core/
+│   │   ├── __init__.py
+│   │   ├── config.py              # Environment variable and settings management
+│   │   ├── database.py            # DB engine/session management, DB abstraction
+│   │   └── security.py            # Password hashing and JWT utilities
+│   ├── models/
+│   │   └── v1/
+│   │       ├── __init__.py
+│   │       └── user.py            # SQLAlchemy User model (v1)
+│   ├── schemas/
+│   │   └── v1/
+│   │       ├── __init__.py
+│   │       ├── user.py            # Pydantic schemas for user (v1)
+│   │       └── token.py           # Pydantic schema for JWT token (v1)
+│   ├── api/
+│   │   └── v1/
+│   │       ├── __init__.py
+│   │       ├── user.py            # User endpoints (v1)
+│   │       └── auth.py            # Auth endpoints (v1)
+│   ├── dependencies/
+│   │   └── v1/
+│   │       ├── __init__.py
+│   │       └── user.py            # Dependency functions (e.g., current_user) (v1)
+│   └── services/
+│       └── v1/
+│           ├── __init__.py
+│           └── user_service.py    # Business logic for users (v1)
+├── .env                           # Environment variables (SECRET_KEY, DATABASE_URL, etc.)
+├── requirements.txt
+└── Dockerfile
