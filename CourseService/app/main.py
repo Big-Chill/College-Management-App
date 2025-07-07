@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.core.database import Base, engine
 from app.api.v2 import course  # Make sure __init__.py imports the router
-from app.models.v1 import course as course_models  # Ensure models are registered
+from app.models.v2 import course as course_models  # Ensure models are registered
 
 # Create tables if they do not exist
 Base.metadata.create_all(bind=engine)

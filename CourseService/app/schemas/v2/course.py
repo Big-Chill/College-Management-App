@@ -6,6 +6,6 @@ class CourseBase(BaseModel):
     description: Optional[str] = None
 
 class CourseOut(CourseBase):
-    id: int
+    id: str
     class Config:
         orm_mode = True

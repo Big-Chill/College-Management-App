@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
-from app.models.v1.course import Course
+from app.models.v2.course import Course
 
 class CourseService:
     @staticmethod
