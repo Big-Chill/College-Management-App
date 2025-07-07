@@ -5,7 +5,7 @@ from app.common.v1.id_generator import generate_primary_id
 class User(Base):
     __tablename__ = "users"
 
-    id = Column(String, primary_key=True, default=generate_primary_id("user"), index=True)
+    id = Column(String, primary_key=True, default=lambda: generate_primary_id("user"), index=True)
     username = Column(String, unique=True, index=True, nullable=False)
     full_name = Column(String, nullable=False)
     email = Column(String, unique=True, index=True, nullable=False)

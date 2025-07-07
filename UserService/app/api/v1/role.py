@@ -25,6 +25,6 @@ def create_role(
 @router.get("/roles/", response_model=list[RoleOut])
 def list_roles(
     db: Session = Depends(get_db),
-    current_user=Depends(require_role(["owner", "admin"]))  # Owner and admin can view roles
+    current_user=Depends(require_role(["Owner", "Admin"]))  # Owner and admin can view roles
 ):
     return db.query(Role).all()
