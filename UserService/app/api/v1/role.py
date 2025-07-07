@@ -7,7 +7,7 @@ from app.dependencies.v1.user import require_role
 
 router = APIRouter()
 
-@router.post("/roles/", response_model=RoleOut, status_code=status.HTTP_201_CREATED)
+@router.post("/create_role/", response_model=RoleOut, status_code=status.HTTP_201_CREATED)
 def create_role(
     role_in: RoleCreate,
     db: Session = Depends(get_db),
@@ -22,7 +22,7 @@ def create_role(
     db.refresh(role)
     return role
 
-@router.get("/roles/", response_model=list[RoleOut])
+@router.get("/get_roles/", response_model=list[RoleOut])
 def list_roles(
     db: Session = Depends(get_db),
     current_user=Depends(require_role(["Owner", "Admin"]))  # Owner and admin can view roles
