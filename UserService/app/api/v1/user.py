@@ -52,7 +52,7 @@ def get_current_user_route(current_user: User = Depends(get_current_user)):
 @router.get("/users", response_model=list[UserOut])
 def get_all_users(
     db: Session = Depends(get_db),
-    current_user=Depends(require_role(["owner", "admin"]))  # Only owner/admin can view all users
+    current_user=Depends(require_role(["Owner", "Admin"]))  # Only owner/admin can view all users
 ):
     users = db.query(User).all()
     return users
