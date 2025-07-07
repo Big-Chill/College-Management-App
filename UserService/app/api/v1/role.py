@@ -11,7 +11,7 @@ router = APIRouter()
 def create_role(
     role_in: RoleCreate,
     db: Session = Depends(get_db),
-    current_user=Depends(require_role(["owner"]))  # Only owner can create roles
+    current_user=Depends(require_role(["Owner"]))  # Only owner can create roles
 ):
     existing = db.query(Role).filter(Role.name == role_in.name).first()
     if existing:
