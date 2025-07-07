@@ -9,6 +9,6 @@ class RoleCreate(RoleBase):
     pass
 
 class RoleOut(RoleBase):
-    id: int
+    id: str
     class Config:
         orm_mode = True
