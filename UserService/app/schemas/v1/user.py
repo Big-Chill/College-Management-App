@@ -8,7 +8,7 @@ class UserBase(BaseModel):
     username: str
     full_name: str
     email: EmailStr
-    role_id: int  # Reference to roles table
+    role_id: str  # Reference to roles table
 
 class UserCreate(UserBase):
     password: str
@@ -26,7 +26,7 @@ class UserCreate(UserBase):
     }
 
 class UserOut(UserBase):
-    id: int
+    id: str
     username: str
     full_name: str
     email: EmailStr
