@@ -21,4 +21,6 @@ services:
       - "8001:8000"                # Expose CourseService on localhost:8001 (container listens on 8000)
     env_file:
       - ./CourseService/.env
+    volumes:
+      - ./CourseService/dbdata:/app/dbdata
     restart: unless-stopped
