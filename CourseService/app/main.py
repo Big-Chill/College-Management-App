@@ -11,7 +11,7 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI(
     title=settings.PROJECT_NAME,
     version="1.0.0",
-    openapi_url=f"{settings.API_V1_STR}/openapi.json"
+    openapi_url=f"{settings.API_STR}/openapi.json"
 )
 
 # CORS middleware (adjust origins for production)
@@ -24,7 +24,7 @@ app.add_middleware(
 )
 
 # Register the versioned course router
-app.include_router(course.router, prefix=f"{settings.API_V1_STR}", tags=["courses"])
+app.include_router(course.router, prefix=f"{settings.API_STR}", tags=["courses"])
 
 # Health check endpoint
 @app.get("/", tags=["health"])

@@ -2,7 +2,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "Course Service"
-    API_V1_STR: str = "/api/v1"
+    API_STR: str = "/api/v2"
     SECRET_KEY: str
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
     ALGORITHM: str = "HS256"
