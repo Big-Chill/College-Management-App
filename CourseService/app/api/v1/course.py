@@ -50,7 +50,7 @@ def get_course(
 def create_subject(
     subject_in: SubjectCreate,
     db: Session = Depends(get_db),
-    user=Depends(require_role(["hod", "faculty"]))
+    user=Depends(require_role(["hod", "faculty", "owner"]))
 ):
     subject = SubjectService.create_subject(
         db,
