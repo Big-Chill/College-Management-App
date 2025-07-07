@@ -11,7 +11,7 @@ router = APIRouter()
 def create_course(
     course_in: CourseBase,
     db: Session = Depends(get_db),
-    user=Depends(require_role(["hod","owner"]))
+    user=Depends(require_role(["HOD","Owner"]))
 ):
     try:
         course = CourseService.create_course(
