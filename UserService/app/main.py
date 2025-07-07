@@ -9,7 +9,7 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI(
     title=settings.PROJECT_NAME,
     version="1.0.0",
-    openapi_url=f"{settings.API_V1_STR}/openapi.json"
+    openapi_url=f"{settings.API_STR}/openapi.json"
 )
 
 # CORS settings (adjust origins as needed)
@@ -22,9 +22,9 @@ app.add_middleware(
 )
 
 # Include versioned routers
-app.include_router(user.router, prefix=f"{settings.API_V1_STR}/users", tags=["users"])
-app.include_router(auth.router, prefix=f"{settings.API_V1_STR}/auth", tags=["auth"])
-app.include_router(role.router, prefix=f"{settings.API_V1_STR}/roles", tags=["roles"])
+app.include_router(user.router, prefix=f"{settings.API_STR}/users", tags=["users"])
+app.include_router(auth.router, prefix=f"{settings.API_STR}/auth", tags=["auth"])
+app.include_router(role.router, prefix=f"{settings.API_STR}/roles", tags=["roles"])
 
 # Health check endpoint
 @app.get("/", tags=["health"])
