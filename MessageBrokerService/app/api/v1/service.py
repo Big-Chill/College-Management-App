@@ -73,3 +73,8 @@ def publish_message(
         return {"status": "message published", "by": service_name, "event": payload.event, "data": payload.data}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to publish message: {e}")
+
+@router.get("/all_services")
+def get_all_services(db: Session = Depends(get_db)):
+    services = db.query(RegisteredService).all()
+    return [{"serviceId": service.id, "serviceName": service.service_name} for service in services]
