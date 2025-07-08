@@ -2,8 +2,11 @@ from jose import JWTError, jwt
 from datetime import datetime, timedelta
 from typing import Any, Optional
 from app.core.config import settings
-from fastapi import Header, HTTPException
+from fastapi import HTTPException, Depends
 from jose import JWTError
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+
+security = HTTPBearer()
 
 def create_access_token(
     service_name: str,
@@ -24,17 +27,14 @@ def decode_access_token(token: str) -> Any:
         raise e
 
 
-
-def verify_token(authorization: str = Header(...)) -> str:
+def verify_token(
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+) -> str:
     """
-    Extracts and verifies a JWT token from the Authorization header.
+    Extracts and verifies a JWT token using HTTPBearer.
     Returns the 'sub' (service_name) if valid.
     """
-    if not authorization.startswith("Bearer "):
-        raise HTTPException(status_code=401, detail="Invalid or missing token")
-
-    token = authorization.split(" ")[1]
-
+    token = credentials.credentials
     try:
         payload = decode_access_token(token)
         return payload["sub"]

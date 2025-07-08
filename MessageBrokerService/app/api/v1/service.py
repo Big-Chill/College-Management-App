@@ -12,6 +12,7 @@ from app.core.security import create_access_token
 from app.core.security import verify_token
 from app.services.v1.publisher_service import PublisherService
 import secrets
+from app.schemas.v1.service import PublishPayload
 
 router = APIRouter()
 
@@ -62,11 +63,13 @@ def refresh_token(payload: RefreshRequest, db: Session = Depends(get_db)):
 
 
 @router.post("/publish")
-async def publish_message(request: Request, service_name: str = Depends(verify_token)):
+def publish_message(
+    payload: PublishPayload,
+    service_name: str = Depends(verify_token)
+):
     try:
-        body = await request.json()
-        publisher = PublisherService()  # Lazy connection inside
-        publisher.publish(body)
-        return {"status": "message published", "by": service_name}
+        publisher = PublisherService()
+        publisher.publish(payload.dict())
+        return {"status": "message published", "by": service_name, "event": payload.event, "data": payload.data}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to publish message: {e}")
