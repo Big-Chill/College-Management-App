@@ -12,6 +12,8 @@ services:
     volumes:
       - ./UserService/dbdata:/app/dbdata
     restart: unless-stopped
+    depends_on:
+      - message-broker
 
   course-service:
     build:
@@ -23,4 +25,31 @@ services:
       - ./CourseService/.env
     volumes:
       - ./CourseService/dbdata:/app/dbdata
+    restart: unless-stopped
+    depends_on:
+      - message-broker
+
+  message-broker:
+    build:
+      context: ./MessageBrokerService
+    container_name: message-broker-service
+    ports:
+      - "8002:8000"                # Broker accessible at localhost:8002
+    env_file:
+      - ./MessageBrokerService/.env
+    volumes:
+      - ./MessageBrokerService/dbdata:/app/dbdata
+    depends_on:
+      - rabbitmq
+    restart: unless-stopped
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"               # For internal broker connections
+      - "15672:15672"             # For RabbitMQ web UI
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
     restart: unless-stopped
