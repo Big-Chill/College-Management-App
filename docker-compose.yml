@@ -13,7 +13,7 @@ services:
       - ./UserService/dbdata:/app/dbdata
     restart: unless-stopped
     depends_on:
-      - message-broker
+      - message-broker-service
 
   course-service:
     build:
@@ -27,9 +27,9 @@ services:
       - ./CourseService/dbdata:/app/dbdata
     restart: unless-stopped
     depends_on:
-      - message-broker
+      - message-broker-service
 
-  message-broker:
+  message-broker-service:
     build:
       context: ./MessageBrokerService
     container_name: message-broker-service
@@ -52,4 +52,16 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
+    restart: unless-stopped
+
+  api-gateway:
+    build:
+      context: ./ApiGateway
+    container_name: api-gateway
+    ports:
+      - "80:80"
+    depends_on:
+      - user-service
+      - course-service
+      - message-broker-service
     restart: unless-stopped

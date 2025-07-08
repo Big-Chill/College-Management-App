@@ -11,7 +11,8 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI(
     title=settings.PROJECT_NAME,
     version="1.0.0",
-    openapi_url=f"{settings.API_STR}/openapi.json"
+    openapi_url=f"/openapi.json",
+    root_path="/message_broker_service"  # Adjust if needed
 )
 
 # Global CORS settings
